@@ -1,0 +1,60 @@
+# QuickBot Compose stack per master plan §6.3.
+# Two services: `robot` (Pi 5 side) and `dev` (workstation side).
+# Host networking + same ROS_DOMAIN_ID + same RMW everywhere.
+
+services:
+  robot:
+    image: quickbot:robot-kilted
+    build:
+      context: .
+      dockerfile: docker/robot.Dockerfile
+    network_mode: host
+    ipc: host
+    privileged: true
+    environment:
+      ROS_DOMAIN_ID: "9"
+      RMW_IMPLEMENTATION: rmw_cyclonedds_cpp
+    devices:
+      - /dev/ttyUSB0:/dev/ttyUSB0
+      - /dev/bus/usb:/dev/bus/usb
+    volumes:
+      - ./ws:/ws
+      - ./config:/config
+      - ./maps:/maps
+      - ./rmf_maps:/rmf_maps
+    command: bash
+
+  dev:
+    image: quickbot:kilted-base
+    build:
+      context: .
+      dockerfile: docker/kilted-base.Dockerfile
+    network_mode: host
+    ipc: host
+    environment:
+      ROS_DOMAIN_ID: "9"
+      RMW_IMPLEMENTATION: rmw_cyclonedds_cpp
+      DISPLAY: ${DISPLAY:-:0}
+    volumes:
+      - ./ws:/ws
+      - ./config:/config
+      - ./maps:/maps
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    command: bash
+
+  rmf:
+    image: quickbot:rmf-kilted
+    build:
+      context: .
+      dockerfile: docker/rmf-kilted.Dockerfile
+    network_mode: host
+    ipc: host
+    environment:
+      ROS_DOMAIN_ID: "9"
+      RMW_IMPLEMENTATION: rmw_cyclonedds_cpp
+      DISPLAY: ${DISPLAY:-:0}
+    volumes:
+      - ./ws:/ws
+      - ./rmf_maps:/rmf_maps
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    command: bash

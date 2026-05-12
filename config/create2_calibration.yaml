@@ -1,0 +1,24 @@
+# Create 2 calibration — measured values overwrite these stubs after Gate G3/G4.
+# Procedure: docs/runbook.md §"Calibration".
+
+create2_driver:
+  ros__parameters:
+    serial_port: /dev/ttyUSB0
+    baud: 115200
+
+    # Geometry. Measure track width by commanding in-place rotation and comparing
+    # commanded yaw vs observed yaw; adjust until they match.
+    wheel_separation_m: 0.235
+    wheel_radius_m: 0.036
+
+    # Scaled wheel-mm/s correction. 1.0 = no correction; raise if /odom undershoots
+    # measured displacement, lower if it overshoots.
+    odom_linear_scale: 1.0
+    odom_angular_scale: 1.0
+
+    # Conservative envelope during bring-up.
+    max_linear_mps: 0.20
+    max_angular_rps: 0.7
+
+    # Driver stops if no /cmd_vel arrives within this window.
+    cmd_timeout_s: 0.5

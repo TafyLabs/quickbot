@@ -1,0 +1,31 @@
+# Build artifacts
+ws/build/
+ws/install/
+ws/log/
+
+# Validation evidence (large/binary; keep dir but ignore contents by default)
+validation/bags/*
+!validation/bags/.gitkeep
+validation/logs/*
+!validation/logs/.gitkeep
+validation/screenshots/*
+!validation/screenshots/.gitkeep
+
+# Editor / OS
+.DS_Store
+.vscode/
+.idea/
+*.swp
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Docker
+.docker-cache/
+
+# Generated frames reports
+frames*.gv
+frames*.pdf

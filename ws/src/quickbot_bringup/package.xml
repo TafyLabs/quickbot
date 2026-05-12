@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>quickbot_bringup</name>
+  <version>0.0.1</version>
+  <description>Launch files for QuickBot: robot, sensors, SLAM, localization, Nav2, and validation tools. Primary operator entry point.</description>
+  <maintainer email="bobby@mindhive.tech">Bobby Larson</maintainer>
+  <license>Apache-2.0</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <exec_depend>create2_driver</exec_depend>
+  <exec_depend>quickbot_description</exec_depend>
+  <exec_depend>robot_state_publisher</exec_depend>
+  <exec_depend>tf2_ros</exec_depend>
+  <exec_depend>depthimage_to_laserscan</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
