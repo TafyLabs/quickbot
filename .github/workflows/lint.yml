@@ -6,39 +6,37 @@ on:
   pull_request:
 
 jobs:
-  hadolint:
-    name: Lint Dockerfiles
+  lint:
+    name: Lint Dockerfiles + YAML + Python
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: hadolint/hadolint-action@v3.1.0
-        with:
-          dockerfile: docker/kilted-base.Dockerfile
-          ignore: DL3008,DL3009,DL3015
-      - uses: hadolint/hadolint-action@v3.1.0
-        with:
-          dockerfile: docker/robot.Dockerfile
-          ignore: DL3008,DL3009,DL3015
-      - uses: hadolint/hadolint-action@v3.1.0
-        with:
-          dockerfile: docker/rmf-kilted.Dockerfile
-          ignore: DL3008,DL3009,DL3015
 
-  yamllint:
-    name: Lint YAML
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - run: pipx install yamllint
-      - run: yamllint -d "{extends: default, rules: {line-length: disable, document-start: disable, truthy: disable}}" compose.yaml config/
-
-  python:
-    name: Lint Python (ruff)
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: pip install ruff
-      - run: ruff check ws/src
+
+      - name: Install linters
+        run: |
+          curl -sSL -o /usr/local/bin/hadolint \
+            "https://github.com/hadolint/hadolint/releases/download/v2.12.0/hadolint-Linux-x86_64"
+          chmod +x /usr/local/bin/hadolint
+          pip install --upgrade pip
+          pip install ruff yamllint
+
+      - name: hadolint Dockerfiles
+        run: |
+          set -e
+          for f in docker/*.Dockerfile; do
+            echo "::group::$f"
+            hadolint --ignore DL3008 --ignore DL3009 --ignore DL3015 "$f"
+            echo "::endgroup::"
+          done
+
+      - name: yamllint compose + config
+        run: |
+          yamllint -d "{extends: default, rules: {line-length: disable, document-start: disable, truthy: disable, indentation: {indent-sequences: consistent}}}" \
+            compose.yaml config/
+
+      - name: ruff Python
+        run: ruff check ws/src
