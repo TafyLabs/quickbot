@@ -3,7 +3,7 @@
 # Build: docker build -f docker/kilted-base.Dockerfile -t quickbot:kilted-base .
 
 FROM ubuntu:24.04
-SHELL ["/bin/bash", "-c"]
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ENV DEBIAN_FRONTEND=noninteractive
 ENV ROS_DISTRO=kilted
 ENV RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
