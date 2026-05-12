@@ -18,8 +18,8 @@ echo "-- ros2 doctor --" | tee -a "$LOG"
 docker run --rm "$IMAGE" bash -lc \
   'source /opt/ros/$ROS_DISTRO/setup.bash && ros2 doctor --report' 2>&1 | tee -a "$LOG"
 
-echo "-- ros2 pkg list (head) --" | tee -a "$LOG"
+echo "-- ros2 pkg list (count) --" | tee -a "$LOG"
 docker run --rm "$IMAGE" bash -lc \
-  'source /opt/ros/$ROS_DISTRO/setup.bash && ros2 pkg list | head -20' 2>&1 | tee -a "$LOG"
+  'source /opt/ros/$ROS_DISTRO/setup.bash && ros2 pkg list | wc -l' 2>&1 | tee -a "$LOG"
 
 echo "PASS: G0 verification complete. Append result to validation/gates.md." | tee -a "$LOG"
