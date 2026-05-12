@@ -1,0 +1,16 @@
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+src = ["ws/src"]
+exclude = ["ws/build", "ws/install", "ws/log"]
+
+[tool.ruff.lint]
+# Conservative default — let formatting drift live in ROS packages where
+# upstream style guides differ from PEP 8.
+select = ["E", "F", "W", "I"]
+ignore = [
+  "E501",  # line length handled by formatter
+]
+
+[tool.ruff.lint.per-file-ignores]
+"setup.py" = ["E402"]
