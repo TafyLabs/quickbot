@@ -5,7 +5,7 @@
   <version>0.0.1</version>
   <description>Nav2 parameter files, maps, lifecycle scripts, SLAM/localization configs.</description>
   <maintainer email="bobby@mindhive.tech">Bobby Larson</maintainer>
-  <license>Apache-2.0</license>
+  <license>MIT</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
   <exec_depend>navigation2</exec_depend>

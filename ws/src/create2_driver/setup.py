@@ -15,7 +15,7 @@ setup(
     maintainer="Bobby Larson",
     maintainer_email="bobby@mindhive.tech",
     description="ROS 2 driver for iRobot Create 2.",
-    license="Apache-2.0",
+    license="MIT",
     entry_points={
         "console_scripts": [
             "create2_driver_node = create2_driver.driver_node:main",

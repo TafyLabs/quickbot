@@ -5,7 +5,7 @@
   <version>0.0.1</version>
   <description>Single-robot Open-RMF fleet adapter mapping RMF tasks to Nav2 NavigateToPose. Based on fleet_adapter_template.</description>
   <maintainer email="bobby@mindhive.tech">Bobby Larson</maintainer>
-  <license>Apache-2.0</license>
+  <license>MIT</license>
 
   <exec_depend>rclpy</exec_depend>
   <exec_depend>nav2_msgs</exec_depend>

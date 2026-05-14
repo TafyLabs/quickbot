@@ -15,6 +15,6 @@ setup(
     maintainer="Bobby Larson",
     maintainer_email="bobby@mindhive.tech",
     description="Single-robot Open-RMF fleet adapter for QuickBot.",
-    license="Apache-2.0",
+    license="MIT",
     entry_points={"console_scripts": []},
 )

@@ -5,7 +5,7 @@
   <version>0.0.1</version>
   <description>ROS 2 driver for iRobot Create 2 over the Open Interface serial protocol. /cmd_vel in; /odom, /tf, /battery_state, /diagnostics out.</description>
   <maintainer email="bobby@mindhive.tech">Bobby Larson</maintainer>
-  <license>Apache-2.0</license>
+  <license>MIT</license>
 
   <exec_depend>rclpy</exec_depend>
   <exec_depend>geometry_msgs</exec_depend>
