@@ -10,10 +10,10 @@ The full design is in [`docs/master-plan.md`](docs/master-plan.md). This README 
 
 | Phase | Gate | State |
 | ----- | ---- | ----- |
-| 0 — Host prep + repo | G0 build, G1 DDS | in progress |
-| 1 — ROS container smoke | G1 | not started |
-| 2 — Create 2 raw serial | G2, G3 | not started |
-| 3 — Create 2 ROS driver | G4 | not started |
+| 0 — Host prep + repo | G0 build, G1 DDS | **done** (on M2 Air, arm64) |
+| 1 — ROS container smoke | G1 | **done** |
+| 2 — Create 2 raw serial | G2, G3 | hardware ready, awaiting Pi bench-up |
+| 3 — Create 2 ROS driver | G4 | **code complete**, awaiting hardware test |
 | 4 — D455 + scan | G5, G6 | not started |
 | 5 — SLAM + map | G7 | not started |
 | 6 — Nav2 real robot | G8 | not started |

@@ -22,7 +22,7 @@ jobs:
             "https://github.com/hadolint/hadolint/releases/download/v2.12.0/hadolint-Linux-x86_64"
           chmod +x /usr/local/bin/hadolint
           pip install --upgrade pip
-          pip install ruff yamllint
+          pip install ruff yamllint pytest
 
       - name: hadolint Dockerfiles
         run: |
@@ -43,3 +43,7 @@ jobs:
 
       - name: ruff Python
         run: ruff check ws/src
+
+      - name: pytest (pure unit tests; no ROS / no hardware)
+        run: |
+          PYTHONPATH=ws/src/create2_driver pytest -q ws/src/create2_driver/test
