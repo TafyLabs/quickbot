@@ -25,27 +25,22 @@ Detailed pass/fail evidence: [`validation/gates.md`](validation/gates.md).
 
 ## Quickstart
 
-> **You need:** Docker Desktop (Mac dev) or Docker Engine (Pi 5 robot), `ros-kilted` apt source (handled in the Dockerfile), and a Create 2 + D455 once you reach Phase 2.
+**[→ Full quickstart: zero to a driving robot in ~30 min (`docs/quickstart.md`)](docs/quickstart.md)** — covers Pi prep, wiring, G2–G4, the second-shell pattern, and the two Kilted gotchas that bit during first bring-up.
+
+TL;DR for someone who already has the kilted-base image built and a wired robot:
 
 ```bash
-# 1. Build the Kilted base image (multi-GB; do on a Linux host or beefy machine).
-docker build -f docker/kilted-base.Dockerfile -t quickbot:kilted-base .
-
-# 2. Build robot + workstation images.
-docker compose build
-
-# 3. Workstation shell.
-docker compose run --rm dev bash
-#   inside the container:
-source /opt/ros/$ROS_DISTRO/setup.bash
-ros2 doctor
-
-# 4. Robot shell (on the Pi 5, with Create 2 + D455 plugged in).
-docker compose run --rm robot bash
+git clone git@github.com:TafyLabs/quickbot.git ~/quickbot && cd ~/quickbot
+docker compose build robot
+./tools/g2_devices.sh                            # G2: device passthrough
+docker compose run --rm robot bash -lc \
+  'cd /ws/src/create2_driver && python3 -m create2_driver.smoke --port /dev/ttyUSB0'   # G3
+docker compose run --rm robot bash -lc \
+  'source /opt/ros/$ROS_DISTRO/setup.bash && cd /ws && colcon build --symlink-install && \
+   source install/setup.bash && ros2 launch quickbot_bringup robot.launch.py'           # G4 (driver)
 ```
 
-Gate G0 passes when the base image builds and `ros2 doctor` runs cleanly.
-Gate G1 passes when `ros2 topic pub` from `dev` is received by a `ros2 topic echo` in `robot` (or in a second `dev` container) over host networking.
+Then from a second SSH session, open another container shell and `ros2 run teleop_twist_keyboard teleop_twist_keyboard` to actually drive it.
 
 ## Repository layout
 
@@ -69,11 +64,14 @@ quickbot/
 
 ## Documentation
 
+- [`docs/quickstart.md`](docs/quickstart.md) — zero to a driving robot, with the gotchas
 - [`docs/master-plan.md`](docs/master-plan.md) — full design document (the source of truth)
 - [`docs/architecture.md`](docs/architecture.md) — software + hardware topology, topic/frame contract
 - [`docs/runbook.md`](docs/runbook.md) — operator commands: startup, mapping, navigation, shutdown
 - [`docs/gates.md`](docs/gates.md) — validation gates G0–G11 with procedures and evidence
+- [`docs/hardware-bringup.md`](docs/hardware-bringup.md) — wiring + Pi OS setup + pre-G2 sanity
 - [`docs/calibration.md`](docs/calibration.md) — Create 2 odometry calibration procedure
+- [`docs/troubleshooting.md`](docs/troubleshooting.md) — first-thing-to-check tables
 - [`docs/adr/`](docs/adr/) — architecture decision records
 
 ## Safety rules
